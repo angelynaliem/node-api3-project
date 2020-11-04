@@ -55,6 +55,18 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/posts', (req, res) => {
   // do your magic!
+  users.getUserPosts(req.params.id)
+  .then(posts => {
+    if(posts) {
+      res.status(200).json(posts)
+    } else {
+      res.status(404).json({ message: "Error getting user id posts" })
+    }
+  })
+  .catch(error => {
+    console.log("Error getting user id posts ", error)
+    res.status(500).json({ errorMessage: "Error getting user id posts" })
+  })
 });
 
 router.delete('/:id', (req, res) => {
