@@ -39,6 +39,18 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   // do your magic!
+  users.getById(req.params.id)
+  .then(user => {
+    if(user) {
+      res.status(200).json(user)
+    } else {
+      res.status(404).json({ message: "User not found" })
+    }
+  })
+  .catch(error => {
+    console.log("Error getting specified id user ", error)
+    res.status(500).json({ errorMessage: "Error getting specified id user" })
+  })
 });
 
 router.get('/:id/posts', (req, res) => {
