@@ -71,6 +71,18 @@ router.get('/:id/posts', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // do your magic!
+  users.remove(req.params.id)
+  .then(count => {
+    if(count > 0) {
+      res.status(200).json({ message: "The user has been deleted" })
+    } else {
+      res.status(404).json({ message: "The user cannot be deleted" })
+    }
+  })
+  .catch(error => {
+    console.log("Error deleting specified user ", error)
+    res.status(500).json({ errorMessage: "Error deleting specified user" })
+  })
 });
 
 router.put('/:id', (req, res) => {
