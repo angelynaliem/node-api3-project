@@ -23,6 +23,18 @@ router.post('/:id/posts', (req, res) => {
 
 router.get('/', (req, res) => {
   // do your magic!
+  users.get()
+  .then(users => {
+    if(users) {
+      res.status(200).json(users)
+    } else {
+      res.status(404).json({ message: "Cannot get users" })
+    }
+  })
+  .catch(error => {
+    console.log("Error getting users ", error)
+    res.status(500).json({ errorMessage: "Error getting users" })
+  })
 });
 
 router.get('/:id', (req, res) => {
